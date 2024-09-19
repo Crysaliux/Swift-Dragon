@@ -1,0 +1,9 @@
+py-cord
+asyncio
+peewee
+groq
+psycopg2-binary
+regex
+requests
+pillow
+python-dotenv
