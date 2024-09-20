@@ -1,9 +1,0 @@
-frontend:
-    path: ./
-    publish: ""
-    scripts:
-        build: pip install -r requirements.txt
-        deploy: python swd_body.py
-name: Swift-Dragon
-region: us-east-1
-yamlVersion: 2
