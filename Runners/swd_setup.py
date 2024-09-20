@@ -29,7 +29,7 @@ class SecondStage(discord.ui.View):
     )
     async def select_logs(self, select, interaction):
         ss.swd_setup('logs', interaction.guild.id, select.values[0].id, 'all')
-        settings_emb = discord.Embed(title=f'[{ss.running_bar(8, 2, self.swd)}]', colour=sp.get_color("idle"))
+        settings_emb = discord.Embed(title=f'[{ss.running_bar(8, 2)}]', colour=sp.get_color("idle"))
         settings_emb.add_field(name='▶Setup:',
                                value='➾ **-** You can now set a channel to play ToD in\n➾ **-** Use /settings to view current active modules\n➾ **-** /tod will help you configuring this module later',
                                inline=False)
@@ -40,7 +40,7 @@ class SecondStage(discord.ui.View):
 
     @discord.ui.button(label="Skip to ToD settings", row=1, style=discord.ButtonStyle.blurple, custom_id='skip-button')
     async def skip_button(self, button, interaction):
-        settings_emb = discord.Embed(title=f'[{ss.running_bar(8, 2, self.swd)}]', colour=sp.get_color("idle"))
+        settings_emb = discord.Embed(title=f'[{ss.running_bar(8, 2)}]', colour=sp.get_color("idle"))
         settings_emb.add_field(name='▶Setup:',
                                value='➾ **-** You can now set a channel to play ToD in\n➾ **-** Use /settings to view current active modules\n➾ **-** /tod will help you configuring this module later',
                                inline=False)
@@ -65,7 +65,7 @@ class ThirdStage(discord.ui.View):
     )
     async def select_tod(self, select, interaction):
         ss.swd_setup('tod', interaction.guild.id, select.values[0].id, 'on')
-        settings_emb = discord.Embed(title=f'[{ss.running_bar(8, 3, self.swd)}]', colour=sp.get_color("idle"))
+        settings_emb = discord.Embed(title=f'[{ss.running_bar(8, 3)}]', colour=sp.get_color("idle"))
         settings_emb.add_field(name='▶Setup:',
                                value='➾ **-** Selecting General Chat channel\n➾ **-** Use /settings to view current active modules\n➾ **-** /gchat will help you configuring this module later',
                                inline=False)
@@ -76,7 +76,7 @@ class ThirdStage(discord.ui.View):
 
     @discord.ui.button(label="Skip to Gchat [beta!]", row=1, style=discord.ButtonStyle.blurple, custom_id='skip-button')
     async def skip_button(self, button, interaction):
-        settings_emb = discord.Embed(title=f'[{ss.running_bar(8, 3, self.swd)}]', colour=sp.get_color("idle"))
+        settings_emb = discord.Embed(title=f'[{ss.running_bar(8, 3)}]', colour=sp.get_color("idle"))
         settings_emb.add_field(name='▶Setup:',
                                value='➾ **-** You can now set a channel to play ToD in\n➾ **-** Use /settings to view current active modules\n➾ **-** /tod will help you configuring this module later',
                                inline=False)
@@ -102,7 +102,7 @@ class FourthStage(discord.ui.View):
     )
     async def select_gchat(self, select, interaction):
         ss.swd_setup('gchat', interaction.guild.id, select.values[0].id, 'on')
-        settings_emb = discord.Embed(title=f'[{ss.running_bar(8, 4, self.swd)}]', colour=sp.get_color("idle"))
+        settings_emb = discord.Embed(title=f'[{ss.running_bar(8, 4)}]', colour=sp.get_color("idle"))
         settings_emb.add_field(name='▶Setup:',
                                value='➾ **-** Selecting Swifty AI Chat channel\n➾ **-** Use /settings to view current active modules\n➾ **-** /chat will help you configuring this module later',
                                inline=False)
@@ -114,7 +114,7 @@ class FourthStage(discord.ui.View):
 
     @discord.ui.button(label="Skip to Swifty AI", row=1, style=discord.ButtonStyle.blurple, custom_id='skip-button')
     async def skip_button(self, button, interaction):
-        settings_emb = discord.Embed(title=f'[{ss.running_bar(8, 4, self.swd)}]', colour=sp.get_color("idle"))
+        settings_emb = discord.Embed(title=f'[{ss.running_bar(8, 4)}]', colour=sp.get_color("idle"))
         settings_emb.add_field(name='▶Setup:',
                                value='➾ **-** Selecting Swifty AI Chat channel\n➾ **-** Use /settings to view current active modules\n➾ **-** /chat will help you configuring this module later',
                                inline=False)
@@ -140,7 +140,7 @@ class FifthStage(discord.ui.View):
     )
     async def select_chat(self, select, interaction):
         ss.swd_setup('chat', interaction.guild.id, select.values[0].id, 'on')
-        settings_emb = discord.Embed(title=f'[{ss.running_bar(8, 5, self.swd)}]', colour=sp.get_color("idle"))
+        settings_emb = discord.Embed(title=f'[{ss.running_bar(8, 5)}]', colour=sp.get_color("idle"))
         settings_emb.add_field(name='▶Setup:',
                                value='➾ **-** Artshare channel selection\n➾ **-** Use /settings to view current active modules\n➾ **-** /artshare will help you configuring this module later',
                                inline=False)
@@ -152,7 +152,7 @@ class FifthStage(discord.ui.View):
 
     @discord.ui.button(label="Skip to Artshare", row=1, style=discord.ButtonStyle.blurple, custom_id='skip-button')
     async def skip_button(self, button, interaction):
-        settings_emb = discord.Embed(title=f'[{ss.running_bar(8, 5, self.swd)}]', colour=sp.get_color("idle"))
+        settings_emb = discord.Embed(title=f'[{ss.running_bar(8, 5)}]', colour=sp.get_color("idle"))
         settings_emb.add_field(name='▶Setup:',
                                value='➾ **-** Artshare channel selection\n➾ **-** Use /settings to view current active modules\n➾ **-** /artshare will help you configuring this module later',
                                inline=False)
@@ -178,7 +178,7 @@ class SixthStage(discord.ui.View):
     )
     async def select_artshare(self, select, interaction):
         ss.swd_setup('artshare', interaction.guild.id, select.values[0].id, 'on')
-        settings_emb = discord.Embed(title=f'[{ss.running_bar(8, 6, self.swd)}]', colour=sp.get_color("idle"))
+        settings_emb = discord.Embed(title=f'[{ss.running_bar(8, 6)}]', colour=sp.get_color("idle"))
         settings_emb.add_field(name='▶Setup:',
                                value='➾ **-** Selecting channel for Greetings\n➾ **-** Use /settings to view current active modules\n➾ **-** /greeting will help you configuring this module later',
                                inline=False)
@@ -190,7 +190,7 @@ class SixthStage(discord.ui.View):
 
     @discord.ui.button(label="Skip to Greetings", row=1, style=discord.ButtonStyle.blurple, custom_id='skip-button')
     async def skip_button(self, button, interaction):
-        settings_emb = discord.Embed(title=f'[{ss.running_bar(8, 6, self.swd)}]', colour=sp.get_color("idle"))
+        settings_emb = discord.Embed(title=f'[{ss.running_bar(8, 6)}]', colour=sp.get_color("idle"))
         settings_emb.add_field(name='▶Setup:',
                                value='➾ **-** Selecting channel for Greetings\n➾ **-** Use /settings to view current active modules\n➾ **-** /greeting will help you configuring this module later',
                                inline=False)
@@ -215,7 +215,7 @@ class SeventhStage(discord.ui.View):
     )
     async def select_greetings(self, select, interaction):
         self.swd.add_view(EighthStage(swd=self.swd, channel_id=select.values[0].id))
-        settings_emb = discord.Embed(title=f'[{ss.running_bar(8, 7, self.swd)}]', colour=sp.get_color("idle"))
+        settings_emb = discord.Embed(title=f'[{ss.running_bar(8, 7)}]', colour=sp.get_color("idle"))
         settings_emb.add_field(name='▶Setup:',
                                 value='➾ **-** Setting welcome message for Greetings module\n➾ **-** Use /settings to view current active modules\n➾ **-** /greeting will help you configuring this module later',
                                 inline=False)
@@ -232,7 +232,7 @@ class SeventhStage(discord.ui.View):
         chat = ss.swd_pull(interaction.guild.id, 'chat')
         greetings = ss.swd_pull(interaction.guild.id, 'greetings')
         artshare = ss.swd_pull(interaction.guild.id, 'artshare')
-        settings_emb = discord.Embed(title=f'[{ss.running_bar(8, 8, self.swd)}]', colour=sp.get_color("idle"))
+        settings_emb = discord.Embed(title=f'[{ss.running_bar(8, 8)}]', colour=sp.get_color("idle"))
         settings_emb.add_field(name='▶Setup complete!',
                                 value='➾ **-** Selecting channel for Greetings\n➾ **-** Use /settings to view current active modules',
                                 inline=False)
@@ -290,7 +290,7 @@ class ESModal(discord.ui.Modal):
         chat = ss.swd_pull(interaction.guild.id, 'chat')
         greetings = ss.swd_pull(interaction.guild.id, 'greetings')
         artshare = ss.swd_pull(interaction.guild.id, 'artshare')
-        settings_emb = discord.Embed(title=f'[{ss.running_bar(8, 8, self.swd)}]', colour=sp.get_color("idle"))
+        settings_emb = discord.Embed(title=f'[{ss.running_bar(8, 8)}]', colour=sp.get_color("idle"))
         settings_emb.add_field(name='▶Setup complete!',
                                value='➾ **-** Selecting channel for Greetings\n➾ **-** Use /settings to view current active modules',
                                inline=False)
@@ -364,7 +364,7 @@ class SWDSetup(commands.Cog):
     @commands.cooldown(1, 2, commands.BucketType.member)
     async def setup(self, ctx):
         await ctx.response.defer()
-        settings_emb = discord.Embed(title=f'[{ss.running_bar(8, 1, self.swd)}]', colour=sp.get_color("idle"))
+        settings_emb = discord.Embed(title=f'[{ss.running_bar(8, 1)}]', colour=sp.get_color("idle"))
         settings_emb.add_field(name='▶Setup:',
                                value='➾ **-** Setting channel to receive logs\n➾ **-** Use /settings to view current active modules\n➾ **-** /logs will help you configuring this module later',
                                inline=False)
