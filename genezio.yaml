@@ -2,10 +2,10 @@ name: Swift-Dragon
 region: eu-central-1
 yamlVersion: 2
 
-frontend:
+backend:
     path: ./
-    sdk:
-        language: python
+    language:
+        name: python
 
     scripts:
         deploy:
