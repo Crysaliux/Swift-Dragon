@@ -5,14 +5,16 @@ yamlVersion: 2
 backend:
     path: ./
     language:
-        name: python
+        name: js
 
     functions:
         - name: run_func
           path: ./
-          entry: swd_body.py
+          handler: handler.js
+          entry: body_runner.js
 
     scripts:
         deploy:
             - python3 -m ensurepip
             - python -m pip install -r requirements.txt
+            - npm install
