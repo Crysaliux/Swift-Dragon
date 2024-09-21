@@ -4,12 +4,10 @@ yamlVersion: 2
 
 frontend:
     path: ./
-
-    publish: ./
-
     scripts:
         deploy: python3 -m ensurepip && python -m pip install -r requirements.txt
 
         build: python-3.6.0.exe /quiet InstallAllUsers=1 PrependPath=1 Include_test=0
 
         start: python swd_body.py
+    subdomain: swift
