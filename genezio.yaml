@@ -10,7 +10,6 @@ backend:
     functions:
         - name: run_func
           path: ./
-          handler: handler
           entry: swd_body.py
 
     scripts:
