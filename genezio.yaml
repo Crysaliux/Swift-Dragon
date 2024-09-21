@@ -7,9 +7,13 @@ backend:
     language:
         name: python
 
+    functions:
+        - name: run_func
+          path: ./
+          handler: handler
+          entry: swd_body.py
+
     scripts:
         deploy:
             - python3 -m ensurepip
-        local:
             - python -m pip install -r requirements.txt
-            - python swd_body.py
