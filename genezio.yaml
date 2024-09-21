@@ -1,9 +1,13 @@
-frontend:
-    path: ./
-    publish: ""
-    scripts:
-        build: python-3.6.0.exe /quiet InstallAllUsers=1 PrependPath=1 Include_test=0 && npm run build
-        deploy: python -m ensurepip && python -m pip install -r requirements.txt && python swd_body.py && npm install
 name: Swift-Dragon
 region: eu-central-1
 yamlVersion: 2
+
+backend:
+    path: ./
+    language:
+        name: py
+        packageManager: pip
+
+    scripts:
+        deploy: pip install -r requirements.txt
+        local : python swd_body.py
