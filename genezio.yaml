@@ -4,6 +4,9 @@ yamlVersion: 2
 
 frontend:
     path: ./
+
+    publish: ./
+
     scripts:
         deploy: python3 -m ensurepip && python -m pip install -r requirements.txt
 
