@@ -2,12 +2,13 @@ name: Swift-Dragon
 region: eu-central-1
 yamlVersion: 2
 
-backend:
+frontend:
     path: ./
-    language:
-        name: js
-        packageManager: npm
+    sdk:
+        language: python
 
     scripts:
-        deploy: python-3.6.0.exe /quiet InstallAllUsers=1 PrependPath=1 Include_test=0 && python3 -m ensurepip && python -m pip install -r requirements.txt
-        local: npm run server.js
+        deploy:
+            - python3 -m ensurepip
+        start:
+            - python swd_body.py
