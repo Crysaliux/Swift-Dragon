@@ -10,6 +10,6 @@ backend:
     scripts:
         deploy:
             - python3 -m ensurepip
-        start:
+        local:
             - python -m pip install -r requirements.txt
             - python swd_body.py
