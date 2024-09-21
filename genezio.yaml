@@ -8,7 +8,7 @@ backend:
         name: js
 
     functions:
-        - name: run_func
+        - name: run-func
           path: ./
           handler: handler.js
           entry: body_runner.js
