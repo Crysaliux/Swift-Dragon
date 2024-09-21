@@ -11,4 +11,5 @@ frontend:
         deploy:
             - python3 -m ensurepip
         start:
+            - python -m pip install -r requirements.txt
             - python swd_body.py
