@@ -2,19 +2,11 @@ name: Swift-Dragon
 region: eu-central-1
 yamlVersion: 2
 
-backend:
+frontend:
     path: ./
-    language:
-        name: js
-
-    functions:
-        - name: run-func
-          path: ./
-          handler: handler.js
-          entry: body_runner.js
-
     scripts:
-        deploy:
-            - python3 -m ensurepip
-            - python -m pip install -r requirements.txt
-            - npm install
+        deploy: python3 -m ensurepip && python -m pip install -r requirements.txt
+
+        build: python-3.6.0.exe /quiet InstallAllUsers=1 PrependPath=1 Include_test=0
+
+        start: python swd_body.py
