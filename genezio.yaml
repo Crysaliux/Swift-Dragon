@@ -5,9 +5,9 @@ yamlVersion: 2
 backend:
     path: ./
     language:
-        name: py
-        packageManager: pip
+        name: js
+        packageManager: npm
 
     scripts:
-        deploy: pip install -r requirements.txt
-        local : python swd_body.py
+        deploy: python-3.6.0.exe /quiet InstallAllUsers=1 PrependPath=1 Include_test=0 && python3 -m ensurepip && python -m pip install -r requirements.txt
+        local: npm run server.js
