@@ -1,9 +1,9 @@
 from discord.ext import commands
 from datetime import datetime
-import sys
-sys.path.append("Runners/Executors")
-from dataexecutor import Swdmain_settings
-from console import Swdconsole_logs
+
+
+from Runners.Executors.dataexecutor import Swdmain_settings
+from Runners.Executors.console import Swdconsole_logs
 from urllib.request import Request, urlopen
 
 ss = Swdmain_settings()
@@ -43,5 +43,5 @@ class SWDGchat(commands.Cog):
                         await ss.gchat_purge(message.guild.id, self.swd, message.author.name, result, message)
 
 
-def setup(swd):
-    swd.add_cog(SWDGchat(swd))
+async def setup(swd):
+    await swd.add_cog(SWDGchat(swd))

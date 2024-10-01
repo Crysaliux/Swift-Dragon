@@ -1,0 +1,24 @@
+{
+  "token": "MTIzMzc1NjM4MDUxOTcyNzEyNA.GL1pMP.gXhnV9p3VJJeypEiRGtWLHbWCZkbjcEVIDLmIo",
+  "cogs": [
+    "Runners.swd_setup",
+    "Runners.swd_logs",
+    "Runners.swd_gchat",
+    "Runners.swd_tod",
+    "Runners.swd_greeting",
+    "Runners.swd_artshare",
+    "Runners.swd_chat",
+    "Runners.swd_imagine",
+    "Runners.swd_fun",
+    "Runners.swd_info",
+    "Runners.swd_owneronly"
+  ],
+  "owner_id": 830486806478848040,
+  "intents_default": "True",
+  "intents_messages": "True",
+  "intents_members": "True",
+  "intents_message_content": "True",
+  "database": "postgresql://mester:-8ifMGlfKqoktcK6Ig6iRw@citadel-10973.7tc.aws-eu-central-1.cockroachlabs.cloud:26257/swiftydb?sslmode=require",
+  "bing_auth_cookie": "14gT4BCJf_rudMLqU77veQiF1-AVPrsASxewiH8W_Z_JiPCoVuuM07rIZJwYEVeLCodXhFZtx694SLlFHwz-_sMrokazhpj6RFdmh3LUxx8zF-wjfDvTWCnBqFqwTOhjvxA91Cz3m-vqroI1TYcydGE-k6TOFuUC3QmuRhCeqzToQ7uul7eF_GbAmQyuntJ9nI5XSgbFOAJCvm3xtLiJuXg",
+  "auth_cookie_SRCHHPGUSR": "SRCHLANG=en&DM=0&BRW=XW&BRH=S&CW=1800&CH=700&SCW=1800&SCH=225&DPR=2.0&UTC=0&THEME=0&WEBTHEME=0&PRVCW=1800&PRVCH=900&WTS=63863210334&HV=1727613678&CIBV=1.1814.0"
+}

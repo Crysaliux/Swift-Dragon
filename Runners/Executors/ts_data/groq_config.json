@@ -1,0 +1,6 @@
+{
+  "token": "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",
+  "model": "llama3-8b-8192",
+  "temperature": 1,
+  "max_tokens": 500
+}

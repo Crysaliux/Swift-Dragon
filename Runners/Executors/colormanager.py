@@ -1,4 +1,4 @@
-from console import Swdconsole_logs
+from Runners.Executors.console import Swdconsole_logs
 
 con_logs = Swdconsole_logs()
 

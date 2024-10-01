@@ -3,24 +3,22 @@ from playhouse.cockroachdb import CockroachDatabase
 import random
 import discord
 import asyncio
-import queue
 from PIL import Image, ImageDraw, ImageFont
 import requests
 import os
-from console import Swdconsole_logs, returns
-from aimanager import Swdai_access
-from bingwrapper import ImageGen
-from backgroundexecutor import Backgroundexec
-from extra.de_extra import Choose
+from Runners.Executors.console import Swdconsole_logs, returns
+from Runners.Executors.securitymanager import Swdai_security
+from Runners.Executors.bingwrapper import ImageGen
+from Runners.Executors.extra.de_extra import Choose
+from Runners.Executors.configmanager import Config
 from datetime import datetime, date, timedelta
 
+conf = Config()
 err_logs = Swdconsole_logs()
-q = queue.Queue()
-bex = Backgroundexec(q_module=q)
-ig = ImageGen(auth_cookie="12uID3tJt1w3MKFIhmLeRd_jVaR2zQwci9iSDvk_Qjv-gDYZ7vX7wmzQQ2KDcCiulqTBK0VnEvX5_Fr52IkDoUVUgf3v3fX0WlxYzeM_7YbCV5HVA5Z-UhEOozY71Qk-D51qgyFVLwIpmehpMCoiSXN5J_Pdq2u8MJ0gzoVZURz734HxjGzrchG6d8sMEtE6-lruTSUFHQFDkRuyCtocp_w", auth_cookie_SRCHHPGUSR="SRCHLANG=en&DM=0&BRW=W&BRH=M&CW=1365&CH=953&SCW=1365&SCH=228&DPR=1.0&UTC=240&PV=10.0.0&WTS=63860084708&PRVCW=1920&PRVCH=953&HV=1724491286&CIBV=1.1803.0")
-sa = Swdai_access()
+ig = ImageGen(auth_cookie=conf.swift_config()["bing_auth_cookie"], auth_cookie_SRCHHPGUSR=conf.swift_config()["auth_cookie_SRCHHPGUSR"])
+sa = Swdai_security()
 
-citadel = CockroachDatabase('postgresql://mester:-8ifMGlfKqoktcK6Ig6iRw@citadel-10973.7tc.aws-eu-central-1.cockroachlabs.cloud:26257/swiftydb?sslmode=require')
+citadel = CockroachDatabase(conf.swift_config()["database"])
 
 class SWDLogs(Model):
     guild_id = BigIntegerField()
@@ -147,23 +145,9 @@ class SWDQueue(Model):
     class Meta:
         database = citadel
 
-class SWD_TAE_elected(Model):
-    user_id = BigIntegerField()
-    message_id = BigIntegerField()
-
-    class Meta:
-        database = citadel
-
-class SWD_TAE_vote(Model):
-    user = ForeignKeyField(SWD_TAE_elected)
-    voter_id = BigIntegerField()
-    vote = CharField(max_length=20)
-
-    class Meta:
-        database = citadel
 
 citadel.connect()
-citadel.create_tables([SWDLogs, SWDGchat, SWDChat, SWDTod, SWDGreetings, SWDArtshare, SWDAutomod, SWDUser, SWDSettings, SWDArts, SWDCharacters, SWDMemory, SWDQueue, SWD_TAE_elected, SWD_TAE_vote])
+citadel.create_tables([SWDLogs, SWDGchat, SWDChat, SWDTod, SWDGreetings, SWDArtshare, SWDAutomod, SWDUser, SWDSettings, SWDArts, SWDCharacters, SWDMemory, SWDQueue])
 
 
 class Swdmain_settings:
@@ -391,10 +375,10 @@ class Swdmain_settings:
 
     def swd_channel_modify(self, type, guild_id):
         try:
-            if type != 'none':
+            if type != 0:
                 result = "https://discord.com/channels/" + f"{guild_id}/" + f"{type}"
             else:
-                result = "**None**"
+                result = "**Not selected**"
             return result
         except:
             err_logs.error('400')
@@ -528,7 +512,7 @@ class Swdmain_settings:
 
     async def art_spread(self, image_url, user_id, guild_id, channel_id, name: str, swd):
         try:
-            artchannel = SWDArts.get_or_none(guild_id=guild_id)
+            artchannel = SWDArtshare.get_or_none(guild_id=guild_id)
             if artchannel is None:
                 pass
             else:
@@ -794,7 +778,6 @@ class Swdswift_imagine:
             getexisting = SWDQueue.get_or_none(user_id=user_id)
             if getexisting is None:
                 SWDQueue.create(user_id=user_id, channel_id=channel_id, prompt=prompt)
-                q.put(user_id)
                 for swift in SWDQueue.select().where(SWDQueue.user_id == user_id):
                     number = str(swift)
                 return number
@@ -804,139 +787,62 @@ class Swdswift_imagine:
             err_logs.error('400')
             return 'error'
 
-    async def queue_remove(self, swd):
+    def queue_bulk_pull(self):
         try:
-            users = bex.imagine_queue()
-            for id in users:
-                getexisting = SWDQueue.get_or_none(user_id=id)
-                if getexisting is None:
-                    return returns.not_found
-                else:
-                    for swift in SWDQueue.select().where(SWDQueue.user_id == id):
-                        c_id = swift.channel_id
-                        p = swift.prompt
-                        swift.delete_instance()
-
-                        channel = swd.get_channel(c_id)
-                        user = swd.get_user(id)
-                        links = await ig.get_images(p, channel, user)
-
-                        result = Image.new('RGB', (2048, 2048), (250, 250, 250))
-                        count = 0
-                        ordered_links = []
-                        for link in links:
-                            if "https://r.bing.com" in link:
-                                pass
-                            else:
-                                ordered_links.append(link)
-                                count = count + 1
-                                image = Image.open(requests.get(link, stream=True).raw)
-                                if count == 1:
-                                    result.paste(image, (0, 0))
-                                elif count == 2:
-                                    result.paste(image, (image.size[0], 0))
-                                elif count == 3:
-                                    result.paste(image, (0, image.size[1]))
-                                elif count == 4:
-                                    result.paste(image, (image.size[0], image.size[1]))
-
-                        result.save("Runners/Executors/ud/result", "PNG")
-                        file = discord.File("Runners/Executors/ud/result")
-
-                        gen_emb = discord.Embed(title='[All Done!]', colour=0xe91e63)
-                        gen_emb.add_field(
-                            name=f"▶Images generated: [{count}]",
-                            value=f"➾ **-** To select the best one use corresponding button below\n➾ **-** Join our community to get Swifty updates: https://discord.gg/FpYas3s2Fp",
-                            inline=False)
-                        gen_emb.set_image(url="attachment://result.png")
-                        await channel.send(file=file, embed=gen_emb, view=Choose(links=ordered_links, count=count))
-
-        except:
-            err_logs.error('400')
-            return 'error'
-
-class Swdaddons_local:
-    def __init__(self):
-        if citadel.is_closed():
-            citadel.connect()
-
-    def save_elected(self, user_id, message_id):
-        try:
-            user = SWD_TAE_elected.get_or_none(user_id=user_id)
-            if user is None:
-                SWD_TAE_elected.create(user_id=user_id, message_id=message_id)
-            else:
-                err_logs.error('400')
-                return 'error'
-        except:
-            err_logs.error('400')
-            return 'error'
-
-    def save_vote(self, user_id, message_id, vote):
-        try:
-            getexisting = SWD_TAE_vote.get_or_none(voter_id=user_id)
+            getexisting = SWDQueue.get_or_none()
             if getexisting is None:
-                user = SWD_TAE_elected.get_or_none(message_id=message_id)
-                if user is None:
-                    err_logs.error('400')
-                    return 'error'
-                else:
-                    SWD_TAE_vote.create(user=user, voter_id=user_id, vote=vote)
+                return returns.not_found
             else:
-                err_logs.error('400')
-                return 'error'
+                users = []
+                for swift in SWDQueue.select():
+                    users.append(swift.user_id)
+                return users
         except:
             err_logs.error('400')
             return 'error'
 
-    async def calculate_votes(self, ctx, member):
+    async def generate_image(self, swd, user_id):
         try:
-            votes_for = 0
-            votes_against = 0
-            user = SWD_TAE_elected.get_or_none(user_id=member.id)
-            if user is None:
-                pass
+            getexisting = SWDQueue.get_or_none(user_id=user_id)
+            if getexisting is None:
+                return returns.not_found
             else:
-                query = SWD_TAE_vote.select().where(SWD_TAE_vote.user == user, SWD_TAE_vote.vote == 'for')
-                for vote in query:
-                    votes_for = votes_for + 1
-                query = SWD_TAE_vote.select().where(SWD_TAE_vote.user == user, SWD_TAE_vote.vote == 'against')
-                for vote in query:
-                    votes_against = votes_against + 1
-                if votes_for > votes_against:
-                    await ctx.respond(f'User {member.mention} has been accepted as a Senator!')
-                    role = ctx.guild.get_role(1184031650963804212)
-                    member.add_roles(role)
-                elif votes_for == votes_against:
-                    await ctx.respond(f'User {member.mention} has not been accepted as a Senator.')
-                else:
-                    return 'against'
+                channel = swd.get_channel(getexisting.channel_id)
+                user = swd.get_user(user_id)
+                p = getexisting.prompt
 
-                query = SWD_TAE_vote.select().where(SWD_TAE_vote.user == user)
-                for vote in query:
-                    vote.delete_instance()
-                for user in SWD_TAE_elected.select().where(SWD_TAE_elected.user_id == member.id):
-                    user.delete_instance()
-        except:
-            err_logs.error('400')
-            return 'error'
+                links = await ig.get_images(p, channel, user)
+                getexisting.delete_instance()
 
-    def clear_data(self, member):
-        try:
-            user = SWD_TAE_elected.get_or_none(user_id=member.id)
-            query = SWD_TAE_vote.select().where(SWD_TAE_vote.user == user)
-            for vote in query:
-                vote.delete_instance()
-            for user in SWD_TAE_elected.select().where(SWD_TAE_elected.user_id == member.id):
-                user.delete_instance()
-        except:
-            err_logs.error('400')
-            return 'error'
+                result = Image.new('RGB', (2048, 2048), (250, 250, 250))
+                count = 0
+                ordered_links = []
+                for link in links:
+                    if "https://r.bing.com" in link:
+                        pass
+                    else:
+                        ordered_links.append(link)
+                        count = count + 1
+                        image = Image.open(requests.get(link, stream=True).raw)
+                        if count == 1:
+                            result.paste(image, (0, 0))
+                        elif count == 2:
+                            result.paste(image, (image.size[0], 0))
+                        elif count == 3:
+                            result.paste(image, (0, image.size[1]))
+                        elif count == 4:
+                            result.paste(image, (image.size[0], image.size[1]))
 
-    async def run_function(self, ctx, member, seconds):
-        try:
-            await asyncio.sleep(int(seconds))
-            await Swdaddons_local.calculate_votes(self, ctx, member)
+                result.save(f"Runners/Executors/ud/{user_id}.png", "PNG")
+                file = discord.File(f"Runners/Executors/ud/{user_id}.png")
+
+                gen_emb = discord.Embed(title='[All Done!]', colour=0xe91e63)
+                gen_emb.add_field(
+                    name=f"▶Images generated: [{count}]",
+                    value=f"➾ **-** To select the best one use corresponding button below\n➾ **-** Join our community to get Swifty updates: https://discord.gg/FpYas3s2Fp",
+                    inline=False)
+                gen_emb.set_image(url="attachment://result.png")
+                await channel.send(file=file, embed=gen_emb, view=Choose(links=ordered_links, count=count))
         except:
             err_logs.error('400')
             return 'error'

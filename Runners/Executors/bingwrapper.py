@@ -7,7 +7,7 @@ import random
 import sys
 import time
 from functools import partial
-from console import Swdconsole_logs, errors
+from Runners.Executors.console import Swdconsole_logs, errors
 from typing import Dict
 from typing import List
 from typing import Union

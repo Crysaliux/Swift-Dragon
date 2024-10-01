@@ -1,11 +1,11 @@
 import discord
 from discord.ext import commands
 from datetime import datetime
-import sys
-sys.path.append("Runners/Executors")
-from dataexecutor import Swdmain_settings
-from console import Swdconsole_logs
-from colormanager import Swdcolor_picker
+
+
+from Runners.Executors.dataexecutor import Swdmain_settings
+from Runners.Executors.console import Swdconsole_logs
+from Runners.Executors.colormanager import Swdcolor_picker
 
 ss = Swdmain_settings()
 con_logs = Swdconsole_logs()
@@ -32,5 +32,5 @@ class SWDGreeting(commands.Cog):
                 await channel.send(greetings.get("message").replace('<member>', f'{member.mention}'))
 
 
-def setup(swd):
-    swd.add_cog(SWDGreeting(swd))
+async def setup(swd):
+    await swd.add_cog(SWDGreeting(swd))

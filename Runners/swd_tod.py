@@ -1,11 +1,11 @@
 import random
 import discord
 from discord.ext import commands
+from discord import app_commands
 from peewee import *
-import sys
-sys.path.append("Runners/Executors")
-from dataexecutor import Swdmain_settings
-from colormanager import Swdcolor_picker
+
+from Runners.Executors.dataexecutor import Swdmain_settings
+from Runners.Executors.colormanager import Swdcolor_picker
 
 ss = Swdmain_settings()
 sp = Swdcolor_picker()
@@ -45,8 +45,8 @@ class SWDTod(commands.Cog):
     def __init__(self, swd):
         self.swd = swd
 
-    @commands.slash_command(name='play', description='-')
-    @commands.cooldown(1, 2, commands.BucketType.member)
+    @app_commands.command(name='play', description='-')
+    @app_commands.checks.cooldown(1, 2)
     async def play(self, ctx):
         await ctx.response.defer()
         tod = ss.swd_pull(ctx.guild.id, 'tod')
@@ -67,5 +67,5 @@ class SWDTod(commands.Cog):
         self.swd.add_view(Select())
 
 
-def setup(swd):
-    swd.add_cog(SWDTod(swd))
+async def setup(swd):
+    await swd.add_cog(SWDTod(swd))

@@ -7,11 +7,11 @@ class Choose(discord.ui.View):
         self.count = count
 
     @discord.ui.button(label="First image", custom_id='1-image', row=0, style=discord.ButtonStyle.green)
-    async def first_button_callback(self, button, interaction):
+    async def first_button_callback(self, interaction, button):
         await interaction.response.send_message(self.links[0])
 
     @discord.ui.button(label="Second image", custom_id='2-image', row=0, style=discord.ButtonStyle.green)
-    async def second_button_callback(self, button, interaction):
+    async def second_button_callback(self, interaction, button):
         if self.count >= 2:
             await interaction.response.send_message(self.links[1])
         else:
@@ -19,7 +19,7 @@ class Choose(discord.ui.View):
             button.label = "No image!"
 
     @discord.ui.button(label="Third image", custom_id='3-image', row=1, style=discord.ButtonStyle.green)
-    async def third_button_callback(self, button, interaction):
+    async def third_button_callback(self, interaction, button):
         if self.count >= 3:
             await interaction.response.send_message(self.links[2])
         else:
@@ -27,7 +27,7 @@ class Choose(discord.ui.View):
             button.label = "No image!"
 
     @discord.ui.button(label="Fourth image", custom_id='4-image', row=1, style=discord.ButtonStyle.green)
-    async def fourth_button_callback(self, button, interaction):
+    async def fourth_button_callback(self, interaction, button):
         if self.count > 3:
             await interaction.response.send_message(self.links[3])
         else:
