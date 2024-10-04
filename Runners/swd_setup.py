@@ -407,10 +407,10 @@ class SWDSetup(commands.Cog):
                                 value='➾ **-** This command requires existing server settings which were not found.',
                                 inline=False)
         else:
-            ss.swd_setup('logs', interaction.guild.id, channel.id, status.name)
+            ss.swd_setup('logs', interaction.guild.id, channel.id, status.value)
             setup_emb = discord.Embed(title='[Settings saved]', colour=sp.get_color("idle"))
             setup_emb.add_field(name=f'▶Channel {channel} will now show logs for {interaction.guild.name}!',
-                                value=f'➾ **-** Logs type: {type} | logs state: {status.name}\n➾ **-** More information in /settings',
+                                value=f'➾ **-** Logs type: {type} | logs state: {status.value}\n➾ **-** More information in /settings',
                                 inline=False)
             roulette = random.randint(0, 100)
             if roulette < 50:
@@ -437,7 +437,7 @@ class SWDSetup(commands.Cog):
                                 value='➾ **-** This command requires existing server settings which were not found.',
                                 inline=False)
         else:
-            ss.swd_setup('tod', interaction.guild.id, channel.id, status.name)
+            ss.swd_setup('tod', interaction.guild.id, channel.id, status.value)
             setup_emb = discord.Embed(title='[Settings saved]', colour=sp.get_color("idle"))
             setup_emb.add_field(
                 name=f'▶Channel {channel} will now be used for Truth or Dare game in {interaction.guild.name}!',
@@ -467,10 +467,10 @@ class SWDSetup(commands.Cog):
                                 value='➾ **-** This command requires existing server settings which were not found.',
                                 inline=False)
         else:
-            ss.swd_setup('gchat', interaction.guild.id, channel.id, status.name)
+            ss.swd_setup('gchat', interaction.guild.id, channel.id, status.value)
             setup_emb = discord.Embed(title='[Settings saved]', colour=sp.get_color("idle"))
             setup_emb.add_field(name=f'▶Channel {channel} will now be used for global chat in {interaction.guild.name}!',
-                                value=f'➾ **-** State: {status.name}\n➾ **-** More information in /settings',
+                                value=f'➾ **-** State: {status.value}\n➾ **-** More information in /settings',
                                 inline=False)
             await channel.edit(slowmode_delay=5)
             roulette = random.randint(0, 100)
@@ -498,10 +498,10 @@ class SWDSetup(commands.Cog):
                                 value='➾ **-** This command requires existing server settings which were not found.',
                                 inline=False)
         else:
-            ss.swd_setup('chat', interaction.guild.id, channel.id, status.name)
+            ss.swd_setup('chat', interaction.guild.id, channel.id, status.value)
             setup_emb = discord.Embed(title='[Settings saved]', colour=sp.get_color("idle"))
             setup_emb.add_field(name=f'▶Channel {channel} will now be used for chat with Swifty AI in {interaction.guild.name}!',
-                                value=f'➾ **-** State: {status.name}\n➾ **-** More information in /settings',
+                                value=f'➾ **-** State: {status.value}\n➾ **-** More information in /settings',
                                 inline=False)
             await channel.edit(slowmode_delay=5)
             roulette = random.randint(0, 100)
@@ -525,12 +525,12 @@ class SWDSetup(commands.Cog):
         if check.get("channel_id") == "none":
             setup_emb = discord.Embed(title='[Setup has not been run to satisfy greetings module]',
                                       colour=sp.get_color("warning"))
-            setup_emb.add_field(name=f'▶Please run /setup in order to configure settings for {interaction.guild.name}!',
+            setup_emb.add_field(name=f'▶Please run /setup in order to configure settings for {interaction.guild.value}!',
                                 value='➾ **-** This command requires existing server settings which were not found.',
                                 inline=False)
             await interaction.response.send_message(embed=setup_emb)
         else:
-            self.swd.add_view(GreetingSetupButton(swd=self.swd, channel_id=channel.id, status=status.name))
+            self.swd.add_view(GreetingSetupButton(swd=self.swd, channel_id=channel.id, status=status.value))
             setup_emb = discord.Embed(title='[Set welcome message!]', colour=sp.get_color("idle"))
             setup_emb.add_field(name=f'▶Utilities:',
                                    value=f'➾ <member> **-** metions member.\n➾ **-** you can use **your message**, ~~your message~~, _your message_ or ```your message`` freely!.',
@@ -542,7 +542,7 @@ class SWDSetup(commands.Cog):
                 setup_emb.set_footer(text='You got a blushy dragon! 30% chance of getting one :3', icon_url='')
             elif roulette < 10:
                 setup_emb.set_footer(text='Cool dragon! 10% chance of getting one :3', icon_url='')
-            await interaction.response.send_message(embed=setup_emb, view=GreetingSetupButton(swd=self.swd, channel_id=channel.id, status=status))
+            await interaction.response.send_message(embed=setup_emb, view=GreetingSetupButton(swd=self.swd, channel_id=channel.id, status=status.value))
 
     @app_commands.command(name='artshare', description='-')
     @app_commands.checks.has_permissions(manage_channels=True)
@@ -560,11 +560,11 @@ class SWDSetup(commands.Cog):
                                 value='➾ **-** This command requires existing server settings which were not found.',
                                 inline=False)
         else:
-            ss.swd_setup('artshare', interaction.guild.id, channel.id, status.name)
+            ss.swd_setup('artshare', interaction.guild.id, channel.id, status.value)
             setup_emb = discord.Embed(title='[Settings saved]', colour=sp.get_color("idle"))
             setup_emb.add_field(
                 name=f'▶Channel {channel} will now be used for artshare in {interaction.guild.name}!',
-                value=f'➾ **-** State: {status.name}\n➾ **-** More information in /settings',
+                value=f'➾ **-** State: {status.value}\n➾ **-** More information in /settings',
                 inline=False)
             await channel.edit(slowmode_delay=5)
             roulette = random.randint(0, 100)

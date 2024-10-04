@@ -21,7 +21,7 @@ conf = Config()
 
 
 class SwiftDragon(Bot, Swdconsole_logs, Swdcolor_picker, Config, Swdmain_settings):
-    def __init__(self, intents=conf.swift_config()["intents"], owner_id=conf.swift_config()["owner_id"], prefix='sw.', swd_cogs=conf.swift_config()["cogs"], token=conf.swift_config()["token"]) -> None:
+    def __init__(self, intents=conf.swift_config()["intents"], owner_id=conf.swift_config()["owner_id"], prefix='sw.', swd_cogs=conf.swift_config()["cogs"], token=conf.swift_config()["token"], test_mode=conf.swift_config()["test_mode"]) -> None:
         current = datetime.today().strftime('%Y-%m-%d')
         Swdconsole_logs.logs(self, '001', "swd_body", current)
 
@@ -30,6 +30,9 @@ class SwiftDragon(Bot, Swdconsole_logs, Swdcolor_picker, Config, Swdmain_setting
         self.prefix = prefix
         self.swd_cogs = swd_cogs
         self.token = token
+        self.test_mode = False
+        if test_mode == "True":
+            self.test_mode = True
         super(SwiftDragon, self).__init__(command_prefix=prefix, tree_cls=CommandErrorHandler, intents=intents, owner_id=owner_id)
 
     def swd_run(self):
@@ -46,8 +49,11 @@ class SwiftDragon(Bot, Swdconsole_logs, Swdcolor_picker, Config, Swdmain_setting
             super().error('1300', current)
 
     async def on_ready(self):
-        for cog in self.swd_cogs:
-            await super().load_extension(f'{cog}')
+        if self.test_mode != True:
+            for cog in self.swd_cogs:
+                await super().load_extension(f'{cog}')
+        else:
+            await super().load_extension("Debug.testing")
 
         await super().change_presence(status=discord.Status.idle, activity=discord.Game(name=f'Looking at {self.member_count_update()} dragons!'))
 

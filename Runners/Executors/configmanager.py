@@ -24,9 +24,14 @@ class Config:
             if data["intents_message_content"] == "True":
                 intents.message_content = True
 
-            return {"token": data["token"], "cogs": data["cogs"], "owner_id": data["owner_id"],
+            if data["test_mode"] == "True":
+                swd_token = data["test_token"]
+            else:
+                swd_token = data["token"]
+
+            return {"token": swd_token, "cogs": data["cogs"], "owner_id": data["owner_id"],
                     "database": data["database"], "bing_auth_cookie": data["bing_auth_cookie"],
-                    "auth_cookie_SRCHHPGUSR": data["auth_cookie_SRCHHPGUSR"], "intents": intents}
+                    "auth_cookie_SRCHHPGUSR": data["auth_cookie_SRCHHPGUSR"], "intents": intents, "test_mode": data["test_mode"]}
         except:
             con_logs.error('400')
             return 'error'

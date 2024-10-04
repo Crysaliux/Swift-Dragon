@@ -1,5 +1,7 @@
 {
   "token": "MTIzMzc1NjM4MDUxOTcyNzEyNA.GL1pMP.gXhnV9p3VJJeypEiRGtWLHbWCZkbjcEVIDLmIo",
+  "test_token": "MTI2MDU4MjEwMDUzMzUxNDI0MA.GmZCkQ.LVRe_llRnTozWj6K8H1D0ruysmFdPBeKXjtvpU",
+  "test_mode": "False",
   "cogs": [
     "Runners.swd_setup",
     "Runners.swd_logs",
@@ -19,6 +21,6 @@
   "intents_members": "True",
   "intents_message_content": "True",
   "database": "postgresql://mester:-8ifMGlfKqoktcK6Ig6iRw@citadel-10973.7tc.aws-eu-central-1.cockroachlabs.cloud:26257/swiftydb?sslmode=require",
-  "bing_auth_cookie": "14gT4BCJf_rudMLqU77veQiF1-AVPrsASxewiH8W_Z_JiPCoVuuM07rIZJwYEVeLCodXhFZtx694SLlFHwz-_sMrokazhpj6RFdmh3LUxx8zF-wjfDvTWCnBqFqwTOhjvxA91Cz3m-vqroI1TYcydGE-k6TOFuUC3QmuRhCeqzToQ7uul7eF_GbAmQyuntJ9nI5XSgbFOAJCvm3xtLiJuXg",
-  "auth_cookie_SRCHHPGUSR": "SRCHLANG=en&DM=0&BRW=XW&BRH=S&CW=1800&CH=700&SCW=1800&SCH=225&DPR=2.0&UTC=0&THEME=0&WEBTHEME=0&PRVCW=1800&PRVCH=900&WTS=63863210334&HV=1727613678&CIBV=1.1814.0"
+  "bing_auth_cookie": "15hzBNuAC5ohIkZf43LaVP5EMMwxb1S0cLeoJXMyrcvSOxvaxKFPhfyXEN1TxOkOeabK923vX3NU7-lFgHghtuvCpxZdFS_OQmMXqByjgSCHOy1os8TrPT0PrM1a7pYQ05xMYLcBCRuT5wKNna_n08ker1GmTwfZTUyitN-O6IgXdtOkq-1vSFV3LPPhL6cOVLrDjJuX4sA6scdGNOKOCQA",
+  "auth_cookie_SRCHHPGUSR": "SRCHLANG=en&DM=0&BRW=XW&BRH=M&CW=1800&CH=900&SCW=1800&SCH=225&DPR=2.0&UTC=0&THEME=0&WEBTHEME=0&PRVCW=1800&PRVCH=900&WTS=63863566982&HV=1727970265&CIBV=1.1815.0&cdxupdttm=638635418597063738"
 }

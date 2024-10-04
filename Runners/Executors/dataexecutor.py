@@ -9,7 +9,6 @@ import os
 from Runners.Executors.console import Swdconsole_logs, returns
 from Runners.Executors.securitymanager import Swdai_security
 from Runners.Executors.bingwrapper import ImageGen
-from Runners.Executors.extra.de_extra import Choose
 from Runners.Executors.configmanager import Config
 from datetime import datetime, date, timedelta
 
@@ -786,22 +785,23 @@ class Swdswift_imagine:
         except:
             err_logs.error('400')
             return 'error'
-
-    def queue_bulk_pull(self):
+        
+    def bulk_pull(self):
         try:
             getexisting = SWDQueue.get_or_none()
             if getexisting is None:
                 return returns.not_found
             else:
-                users = []
+                data = []
                 for swift in SWDQueue.select():
-                    users.append(swift.user_id)
-                return users
+                    user_data = [swift.user_id, swift.channel_id]
+                    data.append(user_data)
+            return data
         except:
             err_logs.error('400')
             return 'error'
 
-    async def generate_image(self, swd, user_id):
+    async def generate_image(self, swd, user_id, loop):
         try:
             getexisting = SWDQueue.get_or_none(user_id=user_id)
             if getexisting is None:
@@ -811,7 +811,7 @@ class Swdswift_imagine:
                 user = swd.get_user(user_id)
                 p = getexisting.prompt
 
-                links = await ig.get_images(p, channel, user)
+                links = ig.get_images(p, channel, user)
                 getexisting.delete_instance()
 
                 result = Image.new('RGB', (2048, 2048), (250, 250, 250))
@@ -836,13 +836,7 @@ class Swdswift_imagine:
                 result.save(f"Runners/Executors/ud/{user_id}.png", "PNG")
                 file = discord.File(f"Runners/Executors/ud/{user_id}.png")
 
-                gen_emb = discord.Embed(title='[All Done!]', colour=0xe91e63)
-                gen_emb.add_field(
-                    name=f"▶Images generated: [{count}]",
-                    value=f"➾ **-** To select the best one use corresponding button below\n➾ **-** Join our community to get Swifty updates: https://discord.gg/FpYas3s2Fp",
-                    inline=False)
-                gen_emb.set_image(url="attachment://result.png")
-                await channel.send(file=file, embed=gen_emb, view=Choose(links=ordered_links, count=count))
+                return {"count": count, "image": "attachment://result.png", "links": ordered_links, "file": file}
         except:
             err_logs.error('400')
             return 'error'

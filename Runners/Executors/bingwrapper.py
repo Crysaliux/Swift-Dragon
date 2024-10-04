@@ -65,7 +65,7 @@ class ImageGen:
         if self.debug_file:
             self.debug = partial(debug, self.debug_file)
 
-    async def get_images(self, prompt: str, channel, user) -> list:
+    def get_images(self, prompt: str, channel, user) -> list:
         if not self.quiet:
             print(sending_message)
         if self.debug_file:
@@ -84,14 +84,14 @@ class ImageGen:
         if "this prompt is being reviewed" in response.text.lower():
             if self.debug_file:
                 self.debug(f"ERROR: {errors.prompt_being_reviewed_error}")
-            await err.channel_error('800', channel, user)
+            #err.channel_error('800', channel, user)
             raise Exception(
                 errors.prompt_being_reviewed_error,
             )
         if "this prompt has been blocked" in response.text.lower():
             if self.debug_file:
                 self.debug(f"ERROR: {errors.blocked_prompt_error}")
-            await err.channel_error('700', channel, user)
+            #err.channel_error('700', channel, user)
             raise Exception(
                 errors.blocked_prompt_error,
             )
@@ -101,7 +101,7 @@ class ImageGen:
         ):
             if self.debug_file:
                 self.debug(f"ERROR: {errors.unsupported_lang_error}")
-            await err.channel_error('1000', channel, user)
+            #err.channel_error('1000', channel, user)
             raise Exception(errors.unsupported_lang_error)
         if response.status_code != 302:
 
@@ -111,7 +111,7 @@ class ImageGen:
                 if self.debug_file:
                     self.debug(f"ERROR: {errors.redirect_error}")
                 print(f"ERROR: {response.text}")
-                await err.channel_error('600', channel, user)
+                #err.channel_error('600', channel, user)
                 raise Exception(errors.redirect_error)
 
         redirect_url = response.headers["Location"].replace("&nfy=1", "")
@@ -129,7 +129,7 @@ class ImageGen:
             if int(time.time() - start_wait) > 200:
                 if self.debug_file:
                     self.debug(f"ERROR: {errors.timeout_error}")
-                await err.channel_error('500', channel, user)
+                #err.channel_error('500', channel, user)
                 raise Exception(errors.timeout_error)
             if not self.quiet:
                 print(".", end="", flush=True)
@@ -137,7 +137,7 @@ class ImageGen:
             if response.status_code != 200:
                 if self.debug_file:
                     self.debug(f"ERROR: {errors.no_results_error}")
-                await err.channel_error('900', channel, user)
+                #err.channel_error('900', channel, user)
                 raise Exception(errors.no_results_error)
             if not response.text or response.text.find("errorMessage") != -1:
                 time.sleep(1)
@@ -158,11 +158,11 @@ class ImageGen:
         ]
         for img in normal_image_links:
             if img in bad_images:
-                await err.channel_error('1100', channel, user)
+                #err.channel_error('1100', channel, user)
                 raise Exception("Bad images")
 
         if not normal_image_links:
-            await err.channel_error('1200', channel, user)
+            #err.channel_error('1200', channel, user)
             raise Exception(errors.no_images_error)
 
         return normal_image_links
