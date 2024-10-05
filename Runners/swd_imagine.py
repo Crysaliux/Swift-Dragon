@@ -102,7 +102,7 @@ class SWDImagine(commands.Cog):
 
             gen_emb = discord.Embed(title='[All Done!]', colour=0xe91e63)
             gen_emb.add_field(
-                name=f"▶Images generated: [{self.call_back["count"]}]",
+                name=f"▶Images generated: [{self.call_back['count']}]",
                 value=f"➾ **-** To select the best one use corresponding button below\n➾ **-** Join our community to get Swifty updates: https://discord.gg/FpYas3s2Fp",
                 inline=False)
             gen_emb.set_image(url=self.call_back["image"])
