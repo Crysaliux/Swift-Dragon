@@ -13,7 +13,8 @@
     "Runners.swd_imagine",
     "Runners.swd_fun",
     "Runners.swd_info",
-    "Runners.swd_owneronly"
+    "Runners.swd_owneronly",
+    "Modules.TAE.applications"
   ],
   "owner_id": 830486806478848040,
   "intents_default": "True",
