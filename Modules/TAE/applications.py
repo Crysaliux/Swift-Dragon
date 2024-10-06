@@ -34,42 +34,45 @@ class Applications(commands.Cog):
 
     @commands.Cog.listener()
     async def on_message(self, message):
-        if message.guild.id == 1172162501979406408:
-            if message.channel in self.app_forum.threads:
-                messages = [
-                    {"role": "system", "content": self.prompt},
-                    {"role": "user", "content": message.content}
-                    ]
+        if message.author.bot:
+            pass
+        else:
+            if message.guild.id == 1172162501979406408:
+                if message.channel in self.app_forum.threads:
+                    messages = [
+                        {"role": "system", "content": self.prompt},
+                        {"role": "user", "content": message.content}
+                        ]
 
-                chat_completion = self.client.chat.completions.create(
-                    messages=messages,
-                    model=self.model,
-                    temperature=1,
-                    max_tokens=10,
-                    top_p=1,
-                    stop=None,
-                    stream=False
-                    )
+                    chat_completion = self.client.chat.completions.create(
+                        messages=messages,
+                        model=self.model,
+                        temperature=1,
+                        max_tokens=10,
+                        top_p=1,
+                        stop=None,
+                        stream=False
+                        )
 
-                reply = chat_completion.choices[0].message.content.lower()
-                if reply == 'artist':
-                    role = discord.utils.get(message.guild.roles, id=self.artist_role)
-                    await message.author.add_roles(role)
-                    await message.reply("**Your application has been accepted, yippie! :3\nYou got verified artist role!**\n_Rangers, with love :3_")
-                elif reply == 'writer':
-                    role = discord.utils.get(message.guild.roles, id=self.writer_role)
-                    await message.author.add_roles(role)
-                    await message.reply("**Your application has been accepted, yippie! :3\nYou got verified artist role!**\n_Rangers, with love :3_")
-                elif reply == 'gamedev':
-                    role = discord.utils.get(message.guild.roles, id=self.gamedev_role)
-                    await message.author.add_roles(role)
-                    await message.reply("**Your application has been accepted, yippie! :3\nYou got verified artist role!**\n_Rangers, with love :3_")
-                elif reply == 'roleplayer':
-                    role = discord.utils.get(message.guild.roles, id=self.roleplayer_role)
-                    await message.author.add_roles(role)
-                    await message.reply("**Your application has been accepted, yippie! :3\nYou got verified artist role!**\n_Rangers, with love :3_")
-                elif reply == 'denied':
-                    await message.reply("**Your application has been denied! :c\nCheck if you provide enough examples!\nIf you think this is an error contact us via ModMail :0**\n_Rangers, with love :3_")
+                    reply = chat_completion.choices[0].message.content.lower()
+                    if reply == 'artist':
+                        role = discord.utils.get(message.guild.roles, id=self.artist_role)
+                        await message.author.add_roles(role)
+                        await message.reply("**Your application has been accepted, yippie! :3\nYou got verified artist role!**\n_Rangers, with love :3_")
+                    elif reply == 'writer':
+                        role = discord.utils.get(message.guild.roles, id=self.writer_role)
+                        await message.author.add_roles(role)
+                        await message.reply("**Your application has been accepted, yippie! :3\nYou got verified artist role!**\n_Rangers, with love :3_")
+                    elif reply == 'gamedev':
+                        role = discord.utils.get(message.guild.roles, id=self.gamedev_role)
+                        await message.author.add_roles(role)
+                        await message.reply("**Your application has been accepted, yippie! :3\nYou got verified artist role!**\n_Rangers, with love :3_")
+                    elif reply == 'roleplayer':
+                        role = discord.utils.get(message.guild.roles, id=self.roleplayer_role)
+                        await message.author.add_roles(role)
+                        await message.reply("**Your application has been accepted, yippie! :3\nYou got verified artist role!**\n_Rangers, with love :3_")
+                    elif reply == 'denied':
+                        await message.reply("**Your application has been denied! :c\nCheck if you provide enough examples!\nIf you think this is an error contact us via ModMail :0**\n_Rangers, with love :3_")
 
 
 async def setup(swd):
